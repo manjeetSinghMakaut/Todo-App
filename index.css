@@ -95,6 +95,8 @@ h2 {
 
 .taskdiv input[type="checkbox"] {
     margin-right: 10px;
+    width: 20px;
+    height: 20px;
 }
 
 .delete-button {
