@@ -1,43 +1,102 @@
 function addTask() {
-    const taskContainer = document.getElementById("innerdiv");
-    const taskinput = document.getElementById("input");
-    const taskText = taskinput.value.trim(); // Trim spaces
-  
-    if (taskText === "") {
+  const taskContainer = document.getElementById("innerdiv");
+  const taskinput = document.getElementById("input");
+  const taskText = taskinput.value.trim(); // Trim spaces
+
+  if (taskText === "") {
       alert("Please enter a task!");
       return;
-    }
-  
-    const taskdiv = document.createElement("div");
-    taskdiv.className = "taskdiv";
-  
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.className = "input";
-    taskdiv.appendChild(checkbox);
-  
-    const tasktextnode = document.createTextNode(taskText); // Create text node
-    taskdiv.appendChild(tasktextnode);
-  
-    const deletebutton = document.createElement("button");
-    deletebutton.innerText = "Delete";
-    deletebutton.className = "delete-button";
-    taskdiv.appendChild(deletebutton);
-  
-    taskContainer.appendChild(taskdiv);
-    taskinput.value = "";
-  
-    deletebutton.addEventListener("click", function () {
+  }
+
+  const taskdiv = document.createElement("div");
+  taskdiv.className = "taskdiv";
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.className = "input";
+  taskdiv.appendChild(checkbox);
+
+  // Modified: Changed from text node to a span element for task text
+  const tasktextnode = document.createElement("span");
+  tasktextnode.textContent = taskText;
+  taskdiv.appendChild(tasktextnode);
+
+  // Container for the Edit and Delete buttons
+  const buttonContainer = document.createElement("div");
+  buttonContainer.className = "button-container";
+  taskdiv.appendChild(buttonContainer);
+
+  const Editbutton = document.createElement("button");
+  Editbutton.innerText = "Edit";
+  Editbutton.className = "edit-button";
+  buttonContainer.appendChild(Editbutton);
+
+  const deletebutton = document.createElement("button");
+  deletebutton.innerText = "Delete";
+  deletebutton.className = "delete-button";
+  buttonContainer.appendChild(deletebutton);
+
+  taskContainer.appendChild(taskdiv);
+  taskinput.value = "";
+
+  // Added: Edit functionality
+  Editbutton.addEventListener("click", function () {
+      editTask(tasktextnode);
+  });
+
+  // Added: Double-click to edit functionality
+  tasktextnode.addEventListener("dblclick", function () {
+      editTask(tasktextnode);
+  });
+
+  deletebutton.addEventListener("click", function () {
       taskContainer.removeChild(taskdiv);
       saveTasks();
-    });
-  
-    checkbox.addEventListener("change", function () {
-      saveTasks(); // Save state when a checkbox is toggled
-    });
-  
-    saveTasks(); // Save state after adding a new task
+  });
+
+  checkbox.addEventListener("change", function () {
+      saveTasks();
+  });
+
+  saveTasks();
+}
+
+// Added: Function to handle editing the task
+function editTask(tasktextnode) {
+  const currentText = tasktextnode.textContent;
+  const inputField = document.createElement("input");
+  inputField.type = "text";
+  inputField.value = currentText;
+  inputField.className = "edit-input";
+
+  // Replace the task text with the input field
+  tasktextnode.replaceWith(inputField);
+  inputField.focus();
+
+  // Save the new value on pressing Enter or losing focus
+  inputField.addEventListener("blur", () => {
+      saveNewTaskText(inputField, tasktextnode);
+  });
+
+  inputField.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+          saveNewTaskText(inputField, tasktextnode);
+      }
+  });
+}
+// Added: Function to save the edited task text
+function saveNewTaskText(inputField, tasktextnode) {
+  const newText = inputField.value.trim();
+  if (newText === "") {
+      alert("Task cannot be empty!");
+      inputField.focus();
+      return;
   }
+  tasktextnode.textContent = newText;
+  inputField.replaceWith(tasktextnode);
+  saveTasks();
+}
+
   
   function Deletetasks() {
     const taskContainer = document.getElementById("innerdiv");

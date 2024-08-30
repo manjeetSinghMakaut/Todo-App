@@ -92,6 +92,38 @@ h2 {
     border: 1px solid #DDDDDD;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
+.taskdiv span {
+    flex-grow: 1; /* This allows the task name to take up the remaining space */
+}
+
+.button-container {
+    display: flex;
+    gap: 10px; /* Adjust spacing between buttons */
+}
+
+.edit-button {
+    background-color: #2196F3;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.edit-button:hover {
+    background-color: #1976D2;
+}
+
+/* Added: Style for the input field when editing a task */
+.edit-input {
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
 
 .taskdiv input[type="checkbox"] {
     margin-right: 10px;
