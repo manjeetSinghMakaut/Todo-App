@@ -10,6 +10,8 @@ function addTask() {
 
   const taskdiv = document.createElement("div");
   taskdiv.className = "taskdiv";
+  taskdiv.setAttribute("draggable", "true"); 
+
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
