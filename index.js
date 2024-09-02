@@ -4,7 +4,7 @@ function addTask() {
   const taskText = taskinput.value.trim(); // Trim spaces
 
   if (taskText === "") {
-      alert("Please enter a task!");
+      alert("Please enter a task!!");
       return;
   }
 
